@@ -1,3 +1,5 @@
+// *** Automated MongoDB Data Import Script from JSON ***
+
 require('dotenv').config();
 const MongoClient = require('mongodb').MongoClient;
 const fs = require('fs');
@@ -9,6 +11,7 @@ const dbName = 'giftdb';
 const collectionName = 'gifts';
 
 // notice you have to load the array of gifts into the data object
+//read the JSON file using Node.js and extracts the docs property from it
 const data = JSON.parse(fs.readFileSync(filename, 'utf8')).docs;
 
 // connect to database and insert data into the collection
@@ -35,6 +38,19 @@ async function loadData() {
         } else {
             console.log("Gifts already exists in DB")
         }
+
+   // *** Task 1: Count the number of documents ***
+   const count = await collection.countDocuments();
+   console.log(`Total documents in gifts collection: ${count}`);
+
+   // *** Task 2: Find and display the first 2 documents ***
+   const twoDocs = await collection.find({}).limit(2).toArray();
+   console.log('First two documents from the gifts collection:', twoDocs);
+
+   // *** Task 3: Find the gift with ID 429 ***
+   const gift429 = await collection.findOne({ id: '429' });
+   console.log('Gift with ID 429:', gift429);
+
     } catch (err) {
         console.error(err);
     } finally {
