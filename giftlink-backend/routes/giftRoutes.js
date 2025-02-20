@@ -19,7 +19,7 @@ router.get('/', async (req, res, next) => {
     } catch (e) {
         // console.error('Error fetching gifts:', e);
         // res.status(500).send('Error fetching gifts');
-        logger.console.error('oops something went wrong', e)
+        logger.console.error('oops something went wrong', e);
         next(e);
     }
 });
